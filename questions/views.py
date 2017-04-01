@@ -26,7 +26,8 @@ def main(request):
     r = client.request_access_token(code)
     access_token = r.access_token
     expires_in = r.expires_in
+    uid = r.uid
     client.set_access_token(access_token, expires_in)
-    res = client.users.show.get()
+    res = client.users.show.get(uid=uid)
     print(res)
-    return render(request, profile_url = res['profile_image_url'], 'main.html')
+    return render(request, 'main.html', {'profile_url':res.avatar_hd, 'user_name':res.name })
