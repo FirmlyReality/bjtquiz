@@ -2,11 +2,12 @@ from django.shortcuts import render,redirect
 from weibo import APIClient
 
 APP_KEY = '2411916390' # app key
+
 CALLBACK_URL = 'http://120.25.241.20/main/' # callback url
 
 
 secret_file = open("secret.txt")
-APP_SECRET = secret_file.read()
+APP_SECRET = secret_file.read().strip()
 secret_file.close()
 
 # Create your views here.
@@ -26,5 +27,4 @@ def main(request):
     access_token = r.access_token
     expires_in = r.expires_in
     client.set_access_token(access_token, expires_in)
-    print(client.statuses.user_timeline.get())
     return render(request,'main.html')
