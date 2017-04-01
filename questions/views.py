@@ -27,4 +27,6 @@ def main(request):
     access_token = r.access_token
     expires_in = r.expires_in
     client.set_access_token(access_token, expires_in)
-    return render(request,'main.html')
+    res = client.users.show.get()
+    print(res)
+    return render(request, profile_url = res['profile_image_url'], 'main.html')
