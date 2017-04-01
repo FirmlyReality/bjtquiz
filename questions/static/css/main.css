@@ -1,0 +1,29 @@
+#maintitlebox
+{
+  float: left;
+  width: 70%;
+  height: 17%;
+  margin-left: 190px;
+  border-bottom: 1px solid #ccc;
+}
+#maintitle
+{
+  font-size: 65px;
+  position: relative;
+  margin:0;
+  top:5%;
+}
+#questionsbox
+{
+  float: left;
+  width: 78%;
+  height: 83%;
+}
+#userbox
+{
+  float: left;
+  margin-top: 40px;
+  width: 21%;
+  height:70%;
+  border-left: 1px solid #ccc;
+}

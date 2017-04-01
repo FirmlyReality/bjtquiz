@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^$', index),
     url(r'^index/$', index),
     url(r'^login/$', login),
+    url(r'^main/$', main),
 ]

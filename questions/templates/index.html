@@ -1,11 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+{% block css %}
+{% endblock %}
 <head>
 </head>
 
 <body>
   <div id='box'>
+    {% block content %}
     <div id='indextitlebox'>
         <h3 id='indextitle'>真 &nbsp;&nbsp;假 &nbsp;&nbsp;白 &nbsp;&nbsp;鸽 &nbsp;&nbsp;小 &nbsp;&nbsp;测 &nbsp;&nbsp;试</h3>
     </div>
@@ -15,6 +18,7 @@
         <p class='myButton3'>用微博登录并准备答题</p>
       </a>
     </div>
+    {% endblock %}
   </div>
 </body>
 
