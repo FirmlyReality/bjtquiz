@@ -2,8 +2,12 @@ from django.shortcuts import render,redirect
 from weibo import APIClient
 
 APP_KEY = '2411916390' # app key
-APP_SECRET = '03cb65de1861da7bbab19d68144e6de8' # app secret
 CALLBACK_URL = 'https://github.com/FirmlyReality' # callback url
+
+
+secret_file = open("secret.txt")
+APP_SECRET = secret_file.read()
+secret_file.close()
 
 # Create your views here.
 
