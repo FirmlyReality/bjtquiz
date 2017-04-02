@@ -9,7 +9,14 @@
     <h3 id='maintitle'>真 &nbsp;&nbsp;假 &nbsp;&nbsp;白 &nbsp;&nbsp;鸽 &nbsp;&nbsp;小 &nbsp;&nbsp;测 &nbsp;&nbsp;试</h3>
 </div>
 <div id='questionsbox'>
-
+{% block questionbox %}
+    <div id='rulebox'>
+        <p>来测测看看你对小白了解多少吧。</p>
+        <h5>注意事项：</h5>
+        <p>每次测试共三十个单选题，每个问题限10秒内回答出来，超时算回答错误，点击选项会自动判断答案并跳转到下一题。</p>
+        <p>准备好了就开始吧!</p>
+    </div>
+{% endblock %}
 </div>
 <div id='userbox'>
   <img src='{{ profile_url }}' />
