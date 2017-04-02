@@ -42,7 +42,7 @@
   border-radius: 10px;
   margin-top: 50px;
 }
-.myButton1 
+.myButton1
 {
 	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
@@ -84,4 +84,40 @@
 .myButton1:active {
 	position:relative;
 	top:1px;
+}
+.mybt1
+{
+  height:19px;
+  cursor:pointer;
+  padding:5px 10px;
+  font-size:16px;
+  padding:5px 15px;
+  color:#4c4c4c;
+  border-radius:4px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  background:#6fb2e5;
+  text-decoration:none;
+  display:inline-block;
+  box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -o-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -webkit-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -moz-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+}
+.mybt2
+{
+  height:19px;
+  cursor:pointer;
+  padding:5px 10px;
+  font-size:16px;
+  padding:5px 15px;
+  color:#4c4c4c;
+  border-radius:4px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  background:#77d125;
+  text-decoration:none;
+  display:inline-block;
+  box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+  -o-box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+  -webkit-box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+  -moz-box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
 }
