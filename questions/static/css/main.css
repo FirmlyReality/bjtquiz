@@ -27,3 +27,9 @@
   height:70%;
   border-left: 1px solid #ccc;
 }
+#userbox img
+{
+  width: 50%;
+  border-radius: 10px;
+  margin-top: 50px;
+}
