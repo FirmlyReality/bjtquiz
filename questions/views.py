@@ -1,8 +1,8 @@
 #-*- coding:utf-8 -*-
 from django.shortcuts import render,redirect
 from weibo import APIClient
-from User.LoginRequired import *
-from User.models import *
+from users.LoginRequired import *
+from users.models import *
 
 # Create your views here.
 

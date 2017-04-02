@@ -19,11 +19,10 @@ from questions.views import *
 from users.views import *
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     url(r'^$', index),
     url(r'^index/$', index),
-    url(r'^login/$', login),
-    url(r'^loginback/$', loginback),
-    url(r'^logout/$', logout),
+    url(r'^login/$', weblogin),
+    url(r'^loginback/$', webloginback),
+    url(r'^logout/$', weblogout),
     url(r'^main/$', main),
 ]
