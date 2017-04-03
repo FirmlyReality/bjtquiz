@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from questions.views import *
+from quiz.views import *
 from users.views import *
 
 urlpatterns = [

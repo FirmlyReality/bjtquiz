@@ -16,10 +16,9 @@ class Question(models.Model):
 
 class QuizStatus(models.Model):
     user = models.OneToOneField('users.MyUser', on_delete=models.CASCADE, related_name='quizstatus')
+    questions = models.ManyToManyField('quiz.Question', related_name='quizstatuses')
     now_qnum = models.IntegerField()
     now_rightnum = models.IntegerField()
-    question = models.ForeignKey('questions.Question',on_delete=models.CASCADE, related_name='quizstatus')
-    answer = models.CharField(max_length=5)
     qtime = models.DateTimeField()
     is_finished = models.BooleanField()
 
