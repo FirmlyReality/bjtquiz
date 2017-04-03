@@ -4,6 +4,7 @@ from weibo import APIClient
 from users.models import *
 from django.contrib.auth import *
 from users.LoginRequired import *
+from Http.RequestMethods import *
 
 APP_KEY = '2411916390' # app key
 CALLBACK_URL = 'http://120.25.241.20/loginback/' # callback url
@@ -14,11 +15,13 @@ secret_file.close()
 
 
 # Create your views here.
+@RequestMethods("GET")
 def weblogin(request):
     client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
     url = client.get_authorize_url()
     return redirect(url)
 
+@RequestMethods("GET")
 def webloginback(request):
     client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
     code = request.GET.get('code')
@@ -39,6 +42,7 @@ def webloginback(request):
     return redirect('/main/')
 
 @LoginRequired
+@RequestMethods("GET")
 def weblogout(request):
     logout(request)
     return redirect('/')
