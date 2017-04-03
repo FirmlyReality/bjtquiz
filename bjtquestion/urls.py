@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^loginback/$', webloginback),
     url(r'^logout/$', weblogout),
     url(r'^main/$', main),
+    url(r'^quiz/$', quiz),
 ]
