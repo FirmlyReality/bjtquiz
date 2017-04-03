@@ -87,10 +87,11 @@
 }
 .mybt1
 {
-  height:19px;
+  margin-left:400px;
+  height:30px;
   cursor:pointer;
   padding:5px 10px;
-  font-size:16px;
+  font-size:20px;
   padding:5px 15px;
   color:#4c4c4c;
   border-radius:4px;

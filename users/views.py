@@ -28,7 +28,6 @@ def webloginback(request):
     uid = r.uid
     client.set_access_token(access_token, expires_in)
     res = client.users.show.get(uid=uid)
-    print(res)
     user = authenticate(uid=uid,password=" ")
     if user is None:
         user = MyUser.objects.create_user(uid," ",res.name, res.avatar_hd , access_token, expires_in)
