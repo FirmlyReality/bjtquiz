@@ -8,16 +8,16 @@
 {% block questionbox  %}
 <div id="cdclock" class="redCountdownDemo"></div>
 <div id='questioncontainer'>
-    <div class="question-number">1/30</div>
-    <div id='question'>请问小白的身高是多少？一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>
+    <div class="question-number">{{ now_qnum }}/{{ total }}</div>
+    <div id='question'>{{ question.question }}</div>
     <ul class='answers'>
-      <li value='A'>A.  一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</li>
-      <li value='B'>B.  181</li>
-      <li value='C'>C.  182</li>
-      <li value='D'>D.  183</li>
+      <li value='A'>A.  {{ question.optionA }}</li>
+      <li value='B'>B.  {{ question.optionB }}</li>
+      <li value='C'>C.  {{ question.optionC }}</li>
+      <li value='D'>D.  {{ question.optionD }}</li>
     </ul>
 </div>
-<div id='resultbox'><div id='result'>回答正确</div></div>
+<div id='resultbox'><div id='result'></div></div>
 {% endblock %}
 
 {% block script_src %}

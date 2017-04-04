@@ -34,7 +34,7 @@ def addquestions(status, level, num):
 #@LoginRequired
 @RequestMethods("GET")
 def quiz(request):
-   '''global q1_num, q2_num, q3_num
+   global q1_num, q2_num, q3_num
    total = q1_num + q2_num + q3_num
    quizstatus = reques.user.quizstatus
    if quizstatus.now_qnum == 0:
@@ -60,8 +60,8 @@ def quiz(request):
            return render(request, 'finished.html', {'result':history})
 
    else:
-       now_question = quizstatus.questions.all()[quizstatus.now_qnum-1]'''
-   return render(request, 'quiz.html' )#{'question':now_question})
+       now_question = quizstatus.questions.all()[quizstatus.now_qnum-1]
+   return render(request, 'quiz.html', {'question':now_question, 'now_qnum':quizstatus.now_qnum, 'total':total})
 
 @LoginRequired
 @RequestMethods("POST")
