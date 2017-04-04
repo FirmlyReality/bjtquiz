@@ -26,7 +26,10 @@ def weblogin(request):
 @RequestMethods("GET")
 def webloginback(request):
     client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
-    code = request.GET.get('code')
+    code = request.GET.get('code',None)
+    if code is None:
+        print("code is None")
+        return redirect("/")
     r = client.request_access_token(code)
     access_token = r.access_token
     expires_in = r.expires_in

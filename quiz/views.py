@@ -4,6 +4,8 @@ from weibo import APIClient
 from users.LoginRequired import *
 from users.models import *
 from Http.RequestMethods import *
+from Http.JsonResponse import *
+from quiz.models import *
 import random
 from datetime import datetime
 
@@ -21,6 +23,7 @@ def main(request):
 q1_num = 20
 q2_num = 5
 q3_num = 5
+limit_time = 10
 
 def addquestions(status, level, num):
     questions = Question.objects.filter(level=level).all()
@@ -28,10 +31,10 @@ def addquestions(status, level, num):
     for i in indexes:
         status.questions.add(questions[i])
 
-@LoginRequired
+#@LoginRequired
 @RequestMethods("GET")
 def quiz(request):
-   global q1_num, q2_num, q3_num
+   '''global q1_num, q2_num, q3_num
    total = q1_num + q2_num + q3_num
    quizstatus = reques.user.quizstatus
    if quizstatus.now_qnum == 0:
@@ -49,10 +52,40 @@ def quiz(request):
        else:
            history = QuizHistory(user=request.user, qnum=total, rightnum=quizstatus.now_rightnum)
            history.save()
+           quizstatus.now_qnum = 0
+           quizstatus.delete()
+           status = QuizStatus(user=request.user, now_qnum=0, now_rightnum=0, is_finished=True)
+           status.qtime = datetime.now()
+           status.save()
            return render(request, 'finished.html', {'result':history})
 
    else:
-       now_question = quizstatus.questions.all()[quizstatus.now_qnum-1]
-   return render(request, 'quiz.html', {'question':now_question})
-       
+       now_question = quizstatus.questions.all()[quizstatus.now_qnum-1]'''
+   return render(request, 'quiz.html' )#{'question':now_question})
 
+@LoginRequired
+@RequestMethods("POST")
+def submit(request):
+    option = request.POST.get('option',None)
+    if option is None:
+        print("option is None")
+        return redirect("/")
+    quizstatus = request.user.quizstatus
+    if quizstatus.is_finished:
+        return JsonResponse(False, "你无法提交该题答案了。")
+    else:
+        quizstatus.is_finished = True
+        quizstatus.save()
+        if (datetime.now() - quizstatus.qtime).seconds > limit_time:
+            return JsonResponse(False, "回答超时，请回答下一题！")
+        else:
+            question = quizstatus.questions.all()[quizstatus.now_qnum-1]
+            if option == question.answer:
+                question.total += 1
+                question.right += 1
+                question.save()
+                return JsonResponse(True, "回答正确！")
+            else:
+                question.total += 1
+                question.save()
+                return JsonResponse(False,"回答错误！")

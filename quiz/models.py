@@ -25,6 +25,5 @@ class QuizStatus(models.Model):
 class QuizHistory(models.Model):
     user = models.ForeignKey('users.MyUser', on_delete=models.CASCADE, related_name='history')
     qnum = models.IntegerField()
-    rightnum = models.IntegerFiedld()
+    rightnum = models.IntegerField()
     end_time = models.DateTimeField(auto_now_add=True)
-

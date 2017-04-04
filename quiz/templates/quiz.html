@@ -1,7 +1,44 @@
 {% extends "main.html" %}
 
-{% block questionbox  %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/css/quiz.css">
 {% endblock %}
 
+{% block questionbox  %}
+<div id="cdclock" class="redCountdownDemo"></div>
+<div id='questioncontainer'>
+    <div class="question-number">1/30</div>
+    <div id='question'>请问小白的身高是多少？一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</div>
+    <ul class='answers'>
+      <li value='A'>A.  一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</li>
+      <li value='B'>B.  181</li>
+      <li value='C'>C.  182</li>
+      <li value='D'>D.  183</li>
+    </ul>
+</div>
+<div id='resultbox'><div id='result'>回答正确</div></div>
+{% endblock %}
 
-
+{% block script_src %}
+<script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
+<script src="/static/js/jquery.knob.js"></script>
+<script src="/static/js/jquery.ba-throttle-debounce.min.js"></script>
+<script src="/static/js/jquery.redcountdown.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#cdclock').redCountdown({ preset: "flat-colors-fat", end: $.now() + 10 });
+  $(".answers li").click(function(){
+    $(this).addClass('selected');
+    $.post("/submit/",
+    {
+      option: $(this).val
+    },
+    function(data,status){
+      $('#result').html(data.message)
+      var t = setTimeout("window.location.href='/quiz/'",1000)
+    });
+  });
+});
+</script>
+{% endblock %}
