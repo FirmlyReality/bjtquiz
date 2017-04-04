@@ -89,3 +89,41 @@ def submit(request):
                 question.total += 1
                 question.save()
                 return JsonResponse(False,"回答错误！")
+
+@RequestMethods("GET")
+def readquestions(request):
+    infile = open("questions.txt")
+    lines = infile.readlines()
+    i = 0
+    level = 1
+    while i < len(lines):
+        info = lines[i].decode('GB2312')
+        if info.encode('utf-8')[0:6] == '初级':
+            level = 1
+        elif info.encode('utf-8')[0:6] == '中级':
+            level = 2
+        elif info.encode('utf-8')[0:6] == '高级':
+            level = 3
+        else:
+            if not info.strip() == "":
+                questiontxt = info
+                optionA = lines[i+1].decode('GB2312')[2:].strip()
+                optionB = lines[i+2].decode('GB2312')[2:].strip()
+                optionC = lines[i+3].decode('GB2312')[2:].strip()
+                optionD = lines[i+4].decode('GB2312')[2:].strip()
+                ans = lines[i+6].decode('GB2312')[0].strip()
+                que = Question(question=questiontxt, optionA=optionA, optionB=optionB, optionC=optionC, optionD=optionD)
+                que.answer = ans
+                que.level = level
+                que.total = 0
+                que.right = 0
+                que.save()
+                print(questiontxt)
+                print(optionA)
+                print(optionB)
+                print(optionC)
+                print(optionD)
+                print(ans)
+                i += 6
+        i += 1
+    return redirect('/')
