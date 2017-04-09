@@ -19,12 +19,16 @@ class QuizStatus(models.Model):
     user = models.OneToOneField('users.MyUser', on_delete=models.CASCADE, related_name='quizstatus')
     questions = models.ManyToManyField('quiz.Question', related_name='quizstatuses')
     now_qnum = models.IntegerField()
+    now_qi = models.IntegerField(default=0)
+    answer = models.CharField(max_length=5, default='')
     now_rightnum = models.IntegerField()
     qtime = models.DateTimeField()
     is_finished = models.BooleanField()
+    start_time = models.DateTimeField()
 
 class QuizHistory(models.Model):
     user = models.ForeignKey('users.MyUser', on_delete=models.CASCADE, related_name='history')
     qnum = models.IntegerField()
     rightnum = models.IntegerField()
+    start_time = models.DateTimeField()
     end_time = models.DateTimeField(auto_now_add=True)

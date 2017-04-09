@@ -9,12 +9,12 @@
 <div id="cdclock" class="redCountdownDemo"></div>
 <div id='questioncontainer'>
     <div class="question-number">{{ now_qnum }}/{{ total }}</div>
-    <div id='question'>{{ question.question }}</div>
+    <div id='question'>{{ question }}</div>
     <ul class='answers'>
-      <li value='A'>A.  {{ question.optionA }}</li>
-      <li value='B'>B.  {{ question.optionB }}</li>
-      <li value='C'>C.  {{ question.optionC }}</li>
-      <li value='D'>D.  {{ question.optionD }}</li>
+      <li value='A'>A.  {{ options.A }}</li>
+      <li value='B'>B.  {{ options.B }}</li>
+      <li value='C'>C.  {{ options.C }}</li>
+      <li value='D'>D.  {{ options.D }}</li>
     </ul>
 </div>
 <div id='resultbox'><div id='result'></div></div>
@@ -27,12 +27,30 @@
 <script src="/static/js/jquery.redcountdown.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-  $('#cdclock').redCountdown({ preset: "flat-colors-fat", end: $.now() + 10 });
-  $(".answers li").click(function(){
-    $(this).addClass('selected');
+  $('#cdclock').redCountdown({ preset: "flat-colors-fat", end: $.now() + 11, onEndCallback: function()
+  {
+    $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
     $.post("/submit/",
     {
-      option: $(this).val
+      option: 'E'
+    },
+    function(data,status){
+      $('#result').html(data.message)
+      var t = setTimeout("window.location.href='/quiz/'",1000)
+    });
+  }});
+  $(".answers li").click(function(){
+    if($(".answers li").attr("class") == 'selected')
+        return;
+    $(this).addClass('selected');
+    $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+    $.post("/submit/",
+    {
+      option: $(this).attr('value')
     },
     function(data,status){
       $('#result').html(data.message)

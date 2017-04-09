@@ -41,6 +41,7 @@ def webloginback(request):
         user = MyUser.objects.create_user(uid," ",res.name, res.avatar_hd , access_token, expires_in)
         status = QuizStatus(user=user, now_qnum=0, now_rightnum=0, is_finished=True)
         status.qtime = datetime.now()
+        status.start_time = datetime.now()
         status.save()
     else:
         user.avatar_hd = res.avatar_hd

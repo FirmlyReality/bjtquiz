@@ -6,7 +6,7 @@ from users.models import *
 from Http.RequestMethods import *
 from Http.JsonResponse import *
 from quiz.models import *
-import random
+import random,time
 from datetime import datetime
 
 # Create your views here.
@@ -18,7 +18,7 @@ def index(request):
 @RequestMethods("GET")
 def main(request):
     user = request.user
-    return render(request, 'main.html', {'profile_url':user.avatar_hd, 'user_name':user.name })
+    return render(request, 'main.html', {'user':user})
 
 q1_num = 20
 q2_num = 5
@@ -27,41 +27,71 @@ limit_time = 10
 
 def addquestions(status, level, num):
     questions = Question.objects.filter(level=level).all()
-    indexes = randowm.sample(range(len(questions)), num)
+    random.seed(time.time())
+    indexes = random.sample(range(len(questions)), num)
     for i in indexes:
         status.questions.add(questions[i])
+
+def getoptions(question,quizstatus):
+    random.seed(time.time())
+    indexs = random.sample(range(4), 4)
+    options = {}
+    in2an = ['A', 'B', 'C', 'D']
+    i = 0
+    for index in indexs:
+        if index == 0:
+            options[in2an[i]] = question.optionA
+        elif index == 1:
+            options[in2an[i]] = question.optionB
+        elif index == 2:
+            options[in2an[i]] = question.optionC
+        elif index == 3:
+            options[in2an[i]] = question.optionD
+        if question.answer == in2an[index]:
+            quizstatus.answer = in2an[i]
+            quizstatus.save()
+        i += 1
+    return options
 
 #@LoginRequired
 @RequestMethods("GET")
 def quiz(request):
    global q1_num, q2_num, q3_num
    total = q1_num + q2_num + q3_num
-   quizstatus = reques.user.quizstatus
+   quizstatus = request.user.quizstatus
    if quizstatus.now_qnum == 0:
        addquestions(quizstatus, 1, q1_num)
        addquestions(quizstatus, 2, q2_num)
        addquestions(quizstatus, 3, q3_num)
+       quizstatus.start_time = datetime.now()
        quizstatus.save()
    if quizstatus.is_finished == True:
        if quizstatus.now_qnum < total:
-           now_question = quizstatus.questions.all()[quizstatus.now_qnum]
+           quizstatus.now_qi = random.randint(0,29-quizstatus.now_qnum)
+           now_question = quizstatus.questions.all()[quizstatus.now_qi]
            quizstatus.now_qnum += 1
            quizstatus.qtime = datetime.now()
            quizstatus.is_finished = False
            quizstatus.save()
+           options = getoptions(now_question, quizstatus)
        else:
            history = QuizHistory(user=request.user, qnum=total, rightnum=quizstatus.now_rightnum)
+           history.start_time = quizstatus.start_time
            history.save()
            quizstatus.now_qnum = 0
            quizstatus.delete()
            status = QuizStatus(user=request.user, now_qnum=0, now_rightnum=0, is_finished=True)
            status.qtime = datetime.now()
+           status.start_time = datetime.now()
            status.save()
            return render(request, 'finished.html', {'result':history})
 
    else:
-       now_question = quizstatus.questions.all()[quizstatus.now_qnum-1]
-   return render(request, 'quiz.html', {'question':now_question, 'now_qnum':quizstatus.now_qnum, 'total':total})
+       now_question = quizstatus.questions.all()[quizstatus.now_qi]
+       options = getoptions(now_question, quizstatus)
+   t = quizstatus.qtime.timetuple()  
+   timestamp = int(time.mktime(t))*1000 
+   return render(request, 'quiz.html', {'user':request.user, 'question':now_question.question, 'options':options, 'now_qnum':quizstatus.now_qnum, 'total':total, 'qtime':timestamp})
 
 @LoginRequired
 @RequestMethods("POST")
@@ -75,12 +105,15 @@ def submit(request):
         return JsonResponse(False, "你无法提交该题答案了。")
     else:
         quizstatus.is_finished = True
+        question = quizstatus.questions.all()[quizstatus.now_qi]
+        quizstatus.questions.remove(question)
         quizstatus.save()
-        if (datetime.now() - quizstatus.qtime).seconds > limit_time:
+        if (datetime.now() - quizstatus.qtime).seconds >= limit_time:
             return JsonResponse(False, "回答超时，请回答下一题！")
         else:
-            question = quizstatus.questions.all()[quizstatus.now_qnum-1]
-            if option == question.answer:
+            print(option)
+            print(question.answer)
+            if option == quizstatus.answer:
                 question.total += 1
                 question.right += 1
                 question.save()
@@ -90,6 +123,7 @@ def submit(request):
                 question.save()
                 return JsonResponse(False,"回答错误！")
 
+@LoginRequired
 @RequestMethods("GET")
 def readquestions(request):
     infile = open("questions.txt")

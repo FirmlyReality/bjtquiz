@@ -20,8 +20,8 @@
 {% endblock %}
 </div>
 <div id='userbox'>
-  <img src='{{ profile_url }}' />
-  <p>{{ user_name }}</p>
+  <img src='{{ user.avatar_hd }}' />
+  <p>{{ user.name }}</p>
   <a href='/logout/' class='myButton1'>退出</a>
 </div>
 {% endblock %}
