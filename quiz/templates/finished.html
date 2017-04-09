@@ -1,4 +1,21 @@
 {% extends 'main.html' %}
 
 {% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/css/finished.css">
+{% endblock %}
+
+{% block questionbox %}
+<div id='resultbox'>
+  <div id='result'>
+    <p>答题完成！成绩：</p>
+    <p>答题数：30</p>
+    <p>答对数：20</p>
+    <p>耗时：4分20秒</p>
+  </div>
+</div>
+<div id='buttonbox'>
+  <a class='mybt3' href='/main/'>返回主界面</a>
+  <a class='mybt2' href='/share/'>分享结果到微博</a>
+</div>
 {% endblock %}

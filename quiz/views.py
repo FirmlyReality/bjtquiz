@@ -20,6 +20,11 @@ def main(request):
     user = request.user
     return render(request, 'main.html', {'user':user})
 
+@RequestMethods("GET")
+def finished(request):
+    user = request.user
+    return render(request, 'finished.html')
+
 q1_num = 20
 q2_num = 5
 q3_num = 5
@@ -53,7 +58,7 @@ def getoptions(question,quizstatus):
         i += 1
     return options
 
-#@LoginRequired
+@LoginRequired
 @RequestMethods("GET")
 def quiz(request):
    global q1_num, q2_num, q3_num
@@ -89,8 +94,8 @@ def quiz(request):
    else:
        now_question = quizstatus.questions.all()[quizstatus.now_qi]
        options = getoptions(now_question, quizstatus)
-   t = quizstatus.qtime.timetuple()  
-   timestamp = int(time.mktime(t))*1000 
+   t = quizstatus.qtime.timetuple()
+   timestamp = int(time.mktime(t))*1000
    return render(request, 'quiz.html', {'user':request.user, 'question':now_question.question, 'options':options, 'now_qnum':quizstatus.now_qnum, 'total':total, 'qtime':timestamp})
 
 @LoginRequired

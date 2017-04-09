@@ -1,0 +1,70 @@
+#resultbox
+{
+  float:left;
+  width: 100%;
+  height: 60%;
+  text-align: center;
+
+}
+#result
+{
+  padding-top: 50px;
+  margin: 0 auto;
+  font-size: 23px;
+  font-weight: bold;
+}
+#buttonbox
+{
+  float:left;
+  width:100%;
+}
+.mybt3
+{
+  margin-left:300px;
+  height:30px;
+  cursor:pointer;
+  padding:5px 10px;
+  font-size:20px;
+  font-weight: bold;
+  padding:5px 15px;
+  color:#4c4c4c;
+  border-radius:4px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  background:#6fb2e5;
+  text-decoration:none;
+  display:inline-block;
+  box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -o-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -webkit-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -moz-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+}
+.mybt3:active
+{
+  position: relative;
+  top:1px;
+}
+.mybt2
+{
+  margin-left: 50px;
+  height:30px;
+  cursor:pointer;
+  padding:5px 10px;
+  font-size:20px;
+  font-weight: bold;
+  padding:5px 15px;
+  color:#4c4c4c;
+  border-radius:4px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  background:#77d125;
+  text-decoration:none;
+  display:inline-block;
+  box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+  -o-box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+  -webkit-box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+  -moz-box-shadow:0 1px 5px #3caa00,inset 0 10px 20px #c9ffb6;
+}
+.mybt2:active
+{
+  position: relative;
+  top:1px;
+}
