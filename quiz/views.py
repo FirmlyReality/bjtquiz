@@ -81,7 +81,7 @@ def quiz(request):
            options = getoptions(now_question, quizstatus)
        else:
            history = QuizHistory(user=request.user, qnum=total, rightnum=quizstatus.now_rightnum)
-           history.start_time = quizstatus.start_time
+           history.use_time = quizstatus.use_time
            history.save()
            quizstatus.now_qnum = 0
            quizstatus.delete()
@@ -89,7 +89,10 @@ def quiz(request):
            status.qtime = datetime.now()
            status.start_time = datetime.now()
            status.save()
-           return render(request, 'finished.html', {'result':history})
+           print(history.use_time)
+           mins = int(history.use_time/60000)
+           secs = int(history.use_time%60000/1000)
+           return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs})
 
    else:
        now_question = quizstatus.questions.all()[quizstatus.now_qi]
@@ -112,8 +115,13 @@ def submit(request):
         quizstatus.is_finished = True
         question = quizstatus.questions.all()[quizstatus.now_qi]
         quizstatus.questions.remove(question)
+        delta = datetime.now() - quizstatus.qtime
+        dseconds = delta.seconds
+        if delta.seconds >= limit_time:
+            dseconds = limit_time
+        quizstatus.use_time += int(dseconds*1000 + int(delta.microseconds/1000))
         quizstatus.save()
-        if (datetime.now() - quizstatus.qtime).seconds >= limit_time:
+        if delta.seconds >= limit_time:
             return JsonResponse(False, "回答超时，请回答下一题！")
         else:
             print(option)
@@ -121,6 +129,8 @@ def submit(request):
             if option == quizstatus.answer:
                 question.total += 1
                 question.right += 1
+                quizstatus.now_rightnum += 1
+                quizstatus.save()
                 question.save()
                 return JsonResponse(True, "回答正确！")
             else:

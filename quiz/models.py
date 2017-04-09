@@ -24,11 +24,11 @@ class QuizStatus(models.Model):
     now_rightnum = models.IntegerField()
     qtime = models.DateTimeField()
     is_finished = models.BooleanField()
-    start_time = models.DateTimeField()
+    use_time = models.IntegerField(default=0)
 
 class QuizHistory(models.Model):
     user = models.ForeignKey('users.MyUser', on_delete=models.CASCADE, related_name='history')
     qnum = models.IntegerField()
     rightnum = models.IntegerField()
-    start_time = models.DateTimeField()
+    use_time = models.IntegerField(default=0)
     end_time = models.DateTimeField(auto_now_add=True)
