@@ -42,6 +42,12 @@
   border-radius: 10px;
   margin-top: 50px;
 }
+#userbox p
+{
+  font-size:20px;
+  font-weight:bold;
+  margin-top:20px;
+}
 #startbtbox
 {
   width: 90%;
