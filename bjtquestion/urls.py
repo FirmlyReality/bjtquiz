@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^main/$', main),
     url(r'^quiz/$', quiz),
     url(r'^submit/$', submit),
+    url(r'^admin_interface/$', admin_interface),
     #url(r'^finished/$', finished),
-    url(r'^readquestions/$', readquestions),
+    #url(r'^readquestions/$', readquestions),
 ]
