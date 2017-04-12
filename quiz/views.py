@@ -181,4 +181,11 @@ def readquestions(request):
 @AdminRequired
 @RequestMethods('GET')
 def admin_interface(request):
-    return redirect('/')
+    return render(request, 'admin.html', {'user':request.user})
+
+@LoginRequired
+@AdminRequired
+@RequestMethods('GET')
+def history(request):
+    histories =  QuizHistory.objects.order_by('-end_time').all()
+    return render(request, 'history.html', {'user':request.user, 'histories':histories})

@@ -1,0 +1,74 @@
+{% extends "main.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/css/admin.css">
+<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block questionbox %}
+<div id='historybox'>
+<div class="box box-info">
+                 <div class="box-body">
+                   <div class="table-responsive">
+                     <table class="table table-striped table-bordered table-condensed table-hover table-image" >
+                        <thead>
+                    	<tr>
+                        <th>微博用户名</th>
+                        <th>答题数</th>
+                        <th>答对数</th>
+                        <th>耗时</th>
+                        <th>完成时间</th>
+                    	</tr>
+                    	</thead>
+                    <tbody>
+                      {% for history in histories %}
+                      <tr>
+                      <th>{{ history.user.name }}</th>
+                      <th>{{ history.qnum }}</th>
+                      <td>{{ history.rightnum }}</td>
+                      <td>{% widthratio history.use_time 1000 1%}秒</td>
+                      <td>{{ history.end_time }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+		               </table>
+                 </div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block script_src %}
+<script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/datatables/1.10.11/js/jquery.dataTables.js"></script>
+<script src="http://cdn.bootcss.com/datatables/1.10.11/js/dataTables.bootstrap.js"></script>
+<script src="http://cdn.bootcss.com/datatables-tabletools/2.1.5/js/TableTools.min.js"></script>
+
+<script>
+         $(document).ready(function() {
+            $(".table-image").DataTable({
+              "bPaginate": true,
+              "iDisplayLength": 10,
+              "bLengthChange": false,
+              "bSort":false,
+              "oLanguage": {//语言设置
+                        "sLengthMenu": "每页显示 _MENU_ 条记录",
+                        "sZeroRecords": "没有检索到数据",
+                        "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                        "sInfoEmtpy": "没有数据",
+                        "sInfoFiltered": "(从 _MAX_个条目中筛选)",
+                        "sSearch": "搜索: ",
+                        "oPaginate": {
+                            "sFirst": "首页",
+                            "sPrevious": "前一页",
+                            "sNext": "后一页",
+                            "sLast": "尾页"
+                       }
+              }
+            });
+         });
+
+ </script>
+
+{% endblock %}

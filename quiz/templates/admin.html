@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/css/admin.css">
+{% endblock %}
+
+{% block questionbox %}
+    <div id='historybtbox'>
+      <a class='mybt1' href='/admin_interface/history/'>答题历史查询</a>
+    </div>
+    <div id='questionsbtbox'>
+      <a class='mybt1' href='/admin_interface/questions/'>问题管理</a>
+    </div>
+{% endblock %}
