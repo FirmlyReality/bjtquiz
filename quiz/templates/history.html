@@ -24,8 +24,8 @@
                     <tbody>
                       {% for history in histories %}
                       <tr>
-                      <th>{{ history.user.name }}</th>
-                      <th>{{ history.qnum }}</th>
+                      <td>{{ history.user.name }}</td>
+                      <td>{{ history.qnum }}</td>
                       <td>{{ history.rightnum }}</td>
                       <td>{% widthratio history.use_time 1000 1%}秒</td>
                       <td>{{ history.end_time }}</td>

@@ -29,6 +29,11 @@ urlpatterns = [
     url(r'^submit/$', submit),
     url(r'^admin_interface/$', admin_interface),
     url(r'^admin_interface/history/$', history),
+    url(r'^admin_interface/questions/$', questions),
+    url(r'^question/query/$', query_question),
+    url(r'^question/modify/$', modify_question),
+    url(r'^question/delete/$', delete_question),
+    url(r'^question/add/$', add_question),
     #url(r'^finished/$', finished),
     #url(r'^readquestions/$', readquestions),
 ]

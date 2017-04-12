@@ -73,6 +73,14 @@ def quiz(request):
    if quizstatus.is_finished == True:
        if quizstatus.now_qnum < total:
            quizstatus.now_qi = random.randint(0,29-quizstatus.now_qnum)
+           quizquestions = quizstatus.questions.all()
+           if len(quizquestions) < 30-quizstatus.now_qnum:
+               diffnum = 30-quizstatus.now_qnum - len(quizquestions)
+               questions = Question.objects.all()
+               random.seed(time.time())
+               indexes = random.sample(range(len(questions)), diffnum)
+               for i in indexes:
+                   quizstatus.questions.add(questions[i])
            now_question = quizstatus.questions.all()[quizstatus.now_qi]
            quizstatus.now_qnum += 1
            quizstatus.qtime = datetime.now()
@@ -189,3 +197,96 @@ def admin_interface(request):
 def history(request):
     histories =  QuizHistory.objects.order_by('-end_time').all()
     return render(request, 'history.html', {'user':request.user, 'histories':histories})
+
+#@LoginRequired
+#@AdminRequired
+@RequestMethods('GET')
+def questions(request):
+    questions =  Question.objects.all()
+    return render(request, 'questions.html', {'user':request.user, 'questions':questions})
+
+#@LoginRequired
+#@AdminRequired
+@RequestMethods('GET')
+def query_question(request):
+    qid = request.GET.get('qid',None)
+    if qid is None:
+        return JsonResponse(False,"没有qid参数")
+    res = {'qid':qid}
+    questions = Question.objects.filter(id=qid)
+    if not questions.exists():
+        return JsonResponse(False,"没找到该问题")
+    question = questions.get(id=qid)
+    res['question'] = question.question
+    res['optionA'] = question.optionA
+    res['optionB'] = question.optionB
+    res['optionC'] = question.optionC
+    res['optionD'] = question.optionD
+    res['answer'] = question.answer
+    res['level'] = question.level
+    return JsonResponse(True,"",res)
+
+#@LoginRequired
+#@AdminRequired
+@RequestMethods('POST')
+def modify_question(request):
+    form = request.POST
+    qid = form.get('questionid',None)
+    if qid is None:
+        return JsonResponse(False,"没有qid参数")
+    questions = Question.objects.filter(id=qid)
+    if not questions.exists():
+        return JsonResponse(False,"没找到该问题")
+    question = questions.get(id=qid)
+    question.question = form['question']
+    question.optionA = form['optionA']
+    question.optionB = form['optionB']
+    question.optionC = form['optionC']
+    question.optionD = form['optionD']
+    question.answer = form['answer']
+    if form['level'].encode('utf-8') == '初级':
+        question.level = 1
+    elif form['level'].encode('utf-8') == '中级':
+        question.level = 2
+    else:
+        question.level = 3
+    question.save()
+    return redirect("/admin_interface/questions/")
+
+#@LoginRequired
+#@AdminRequired
+@RequestMethods('POST')
+def delete_question(request):
+    qid = request.POST.get('qid',None)
+    if qid is None:
+        return JsonResponse(False,"没有qid参数")
+    res = {'qid':qid}
+    questions = Question.objects.filter(id=qid)
+    if not questions.exists():
+        return JsonResponse(False,"没找到该问题")
+    question = questions.get(id=qid)
+    question.delete()
+    return JsonResponse(True,"删除成功")
+
+#@LoginRequired
+#@AdminRequired
+@RequestMethods('POST')
+def add_question(request):
+    form = request.POST
+    question = Question()
+    question.question = form['aquestion']
+    question.optionA = form['aoptionA']
+    question.optionB = form['aoptionB']
+    question.optionC = form['aoptionC']
+    question.optionD = form['aoptionD']
+    question.answer = form['answer']
+    if form['level'].encode('utf-8') == '初级':
+        question.level = 1
+    elif form['level'].encode('utf-8') == '中级':
+        question.level = 2
+    else:
+        question.level = 3
+    question.total = 0
+    question.right = 0
+    question.save()
+    return redirect("/admin_interface/questions/")

@@ -16,7 +16,7 @@
 #questionsbox
 {
   float: left;
-  width: 78%;
+  width: 82%;
   height: 83%;
   text-align: left;
 }
@@ -32,7 +32,7 @@
 {
   float: left;
   margin-top: 40px;
-  width: 21%;
+  width: 18%;
   height:70%;
   border-left: 1px solid #ccc;
 }
