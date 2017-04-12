@@ -1,0 +1,95 @@
+* {font-family:"微软雅黑","黑体"; color: #333;}
+body
+{
+    background: url(/static/images/bgbjt.jpg)no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    text-align: center;
+}
+#box
+{
+  opacity: 0.7;
+  height: 620px;
+  width: 1200px;
+  margin: 60px auto 50px;
+  background:#FCFCFC;
+  border:1px solid #dedede;
+  box-shadow:0 1px 5px #D9D9D9,inset 0 10px 20px #F1F1F1;
+  -o-box-shadow:0 1px 5px #D9D9D9,inset 0 10px 20px #F1F1F1;
+  -webkit-box-shadow:0 1px 5px #D9D9D9,inset 0 10px 20px #F1F1F1;
+  -moz-box-shadow:0 1px 5px #D9D9D9,inset 0 10px 20px #F1F1F1;
+  border-radius:20px 5px 20px 5px;
+  -moz-border-radius:20px 5px 20px 5px;
+  -webkit-border-radius:20px 5px 20px 5px;
+}
+#indextitlebox
+{
+  float: left;
+  width: 100%;
+  height: 50%;
+}
+#indextitle
+{
+  font-size: 65px;
+  position: relative;
+  margin:0;
+  top:70%;
+}
+#loginbox
+{
+  width: 300px;
+  height: 50px;
+  margin: 0;
+  float: left;
+  position: relative;
+  left:38%;
+  top: 90px;
+  border:1px solid #dedede;
+  border-radius:6px;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+}
+#loginbox:active
+{
+  position: relative;
+  top: 93px;
+}
+#loginbox img
+{
+  height: 50px;
+  float:left;
+}
+.myButton3
+{
+	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
+	background:-moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:-webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:-o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:-ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+	background-color:#f24537;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:"微软雅黑","黑体",'宋体';
+	font-size:17px;
+	font-weight:bold;
+	padding:12px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+  margin:0;
+  height:25px;
+  width: 173px;
+  float:left;
+}

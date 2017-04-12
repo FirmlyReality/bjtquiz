@@ -1,0 +1,90 @@
+#cdclock
+{
+  float:left;
+  width: 200px;
+  margin-left: 20px;
+  margin-top:100px;
+}
+#questioncontainer
+{
+  width:74%;
+  font-size: 20px;
+  font-weight: bold;
+  float:right;
+  margin-top: 5%;
+}
+#question
+{
+  margin-left: 5px;
+  width: 85%;
+}
+ul.answers
+{
+  margin: 0px;
+  padding:5px;
+  list-style:none;
+  width:65%;
+  max-width: 80%;
+}
+ul.answers li.selected
+{
+  background:#6fb2e5;
+  box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -o-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -webkit-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+  -moz-box-shadow:0 1px 5px #0061aa,inset 0 10px 20px #b6f9ff;
+}
+ul.answers li
+{
+  cursor:pointer;
+  width:100%;
+  height:auto;
+  padding:5px 30px;
+  margin:12px 0;
+  color:#4c4c4c;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  border-radius:4px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  -webkit-box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 6px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.4);
+  -moz-box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 6px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.4);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 6px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.4);
+  background:#f6f6f6;
+  background:-webkit-gradient(linear,left top,left bottom,from(#f6f6f6),to(#d4d4d4));
+  background:-webkit-linear-gradient(#f6f6f6,#d4d4d4);
+  background-image:-moz-linear-gradient(top,#f6f6f6,#d4d4d4);
+  background-image:-moz-gradient(top,#f6f6f6,#d4d4d4);
+  border:1px solid #a1a1a1;
+}
+.question-number
+{
+  float: right;
+  margin: 0;
+  font-size: 18px;
+  position:relative;
+  width: 53px;
+  height: 25px;
+  right:20px;
+  top:0px;
+  border:1px solid #F6F6F6;
+  padding:5px;
+  background:#F0F0F0;text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  -webkit-box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 6px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.4);
+  -moz-box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 6px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.4);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 6px 0 rgba(255,255,255,0.3),0 1px 2px rgba(0,0,0,0.4);
+  border-radius:3px;
+}
+#resultbox
+{
+  float:right;
+  width: 100%;
+  text-align: center;
+
+}
+#result
+{
+  margin: 0 auto;
+  color:red;
+  font-size: 23px;
+  font-weight: bold;
+}
