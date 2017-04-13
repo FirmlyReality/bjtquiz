@@ -146,7 +146,7 @@ def submit(request):
                 question.save()
                 return JsonResponse(False,"回答错误！")
 
-@LoginRequired
+#@LoginRequired
 @RequestMethods("GET")
 def readquestions(request):
     infile = open("questions.txt")
@@ -154,7 +154,7 @@ def readquestions(request):
     i = 0
     level = 1
     while i < len(lines):
-        info = lines[i].decode('GB2312')
+        info = lines[i].decode('utf-8')
         if info.encode('utf-8')[0:6] == '初级':
             level = 1
         elif info.encode('utf-8')[0:6] == '中级':
@@ -164,11 +164,11 @@ def readquestions(request):
         else:
             if not info.strip() == "":
                 questiontxt = info
-                optionA = lines[i+1].decode('GB2312')[2:].strip()
-                optionB = lines[i+2].decode('GB2312')[2:].strip()
-                optionC = lines[i+3].decode('GB2312')[2:].strip()
-                optionD = lines[i+4].decode('GB2312')[2:].strip()
-                ans = lines[i+6].decode('GB2312')[0].strip()
+                optionA = lines[i+1].decode('utf-8')[2:].strip()
+                optionB = lines[i+2].decode('utf-8')[2:].strip()
+                optionC = lines[i+3].decode('utf-8')[2:].strip()
+                optionD = lines[i+4].decode('utf-8')[2:].strip()
+                ans = lines[i+6].decode('utf-8')[0].strip()
                 que = Question(question=questiontxt, optionA=optionA, optionB=optionB, optionC=optionC, optionD=optionD)
                 que.answer = ans
                 que.level = level
