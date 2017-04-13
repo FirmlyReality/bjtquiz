@@ -14,7 +14,7 @@ from datetime import datetime
 def index(request):
     return render(request,'index.html')
 
-#@LoginRequired
+@LoginRequired
 @RequestMethods("GET")
 def main(request):
     user = request.user

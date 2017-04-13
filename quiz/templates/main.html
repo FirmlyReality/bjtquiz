@@ -19,9 +19,11 @@
     <div id='startbtbox'>
       <a class='mybt1' href='/quiz/'>开始答题</a>
     </div>
+    {% if user.is_admin == True %}
     <div id='adminbtbox'>
       <a class='mybt4' href='/admin_interface/'>管理员界面</a>
     </div>
+    {% endif %}
 {% endblock %}
 </div>
 <div id='userbox'>
