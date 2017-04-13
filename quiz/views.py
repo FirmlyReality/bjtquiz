@@ -153,9 +153,12 @@ def readquestions(request):
     lines = infile.readlines()
     i = 0
     level = 1
+    lines[0] = lines[0][3:]
     while i < len(lines):
         info = lines[i].decode('utf-8')
+        print(info)
         if info.encode('utf-8')[0:6] == '初级':
+            print(level)
             level = 1
         elif info.encode('utf-8')[0:6] == '中级':
             level = 2
