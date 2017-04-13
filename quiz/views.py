@@ -198,15 +198,15 @@ def history(request):
     histories =  QuizHistory.objects.order_by('-end_time').all()
     return render(request, 'history.html', {'user':request.user, 'histories':histories})
 
-#@LoginRequired
-#@AdminRequired
+@LoginRequired
+@AdminRequired
 @RequestMethods('GET')
 def questions(request):
     questions =  Question.objects.all()
     return render(request, 'questions.html', {'user':request.user, 'questions':questions})
 
-#@LoginRequired
-#@AdminRequired
+@LoginRequired
+@AdminRequired
 @RequestMethods('GET')
 def query_question(request):
     qid = request.GET.get('qid',None)
@@ -226,8 +226,8 @@ def query_question(request):
     res['level'] = question.level
     return JsonResponse(True,"",res)
 
-#@LoginRequired
-#@AdminRequired
+@LoginRequired
+@AdminRequired
 @RequestMethods('POST')
 def modify_question(request):
     form = request.POST
@@ -253,8 +253,8 @@ def modify_question(request):
     question.save()
     return redirect("/admin_interface/questions/")
 
-#@LoginRequired
-#@AdminRequired
+@LoginRequired
+@AdminRequired
 @RequestMethods('POST')
 def delete_question(request):
     qid = request.POST.get('qid',None)
@@ -268,8 +268,8 @@ def delete_question(request):
     question.delete()
     return JsonResponse(True,"删除成功")
 
-#@LoginRequired
-#@AdminRequired
+@LoginRequired
+@AdminRequired
 @RequestMethods('POST')
 def add_question(request):
     form = request.POST
