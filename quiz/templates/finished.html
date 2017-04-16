@@ -16,6 +16,10 @@
 </div>
 <div id='buttonbox'>
   <a class='mybt3' href='/main/'>返回主界面</a>
-  <a class='mybt2' href='/share/'>分享结果到微博</a>
+  <wb:share-button button_text="分享结果到微博" size="big" appkey="2411916390" url='http://120.25.241.20/' title='我答对了{{ result.qnum }}道题，仅耗时{{ min }}分{{ secs }}秒，你也来试试吧！' type="button"></wb:share-button>
 </div>
+{% endblock %}
+
+{% block script_src %}
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?debug=true" type="text/javascript" charset="utf-8"></script>
 {% endblock %}

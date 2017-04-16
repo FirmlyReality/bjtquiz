@@ -34,6 +34,6 @@ urlpatterns = [
     url(r'^question/modify/$', modify_question),
     url(r'^question/delete/$', delete_question),
     url(r'^question/add/$', add_question),
-    #url(r'^finished/$', finished),
+    url(r'^finished/$', finished),
     #url(r'^readquestions/$', readquestions),
 ]

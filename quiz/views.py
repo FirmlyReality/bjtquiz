@@ -99,7 +99,7 @@ def quiz(request):
            status.save()
            print(history.use_time)
            mins = int(history.use_time/60000)
-           secs = int(history.use_time%60000/1000)
+           secs = float(history.use_time%60000/1000.0)
            return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs})
 
    else:
