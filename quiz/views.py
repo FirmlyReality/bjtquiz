@@ -25,9 +25,9 @@ def finished(request):
     user = request.user
     return render(request, 'finished.html')
 
-q1_num = 20
+q1_num = 15
 q2_num = 5
-q3_num = 5
+q3_num = 10
 limit_time = 10
 
 def addquestions(status, level, num):
@@ -57,6 +57,21 @@ def getoptions(question,quizstatus):
             quizstatus.save()
         i += 1
     return options
+
+def update_best(user, history):
+    is_update = False
+    if hasattr(user, 'besthistory'):
+        besthistory = user.besthistory
+        if besthistory.history.rightnum < history.rightnum or (besthistory.history.rightnum == history.rightnum and besthistory.history.use_time > history.use_time):
+            besthistory.history = history
+            besthistory.save()
+            is_update = True
+    else:
+        best = BestHistory(user=user, history=history)
+        best.save()
+        is_update = True
+    BestHistory.objects.values('history').order_by()
+
 
 @LoginRequired
 @RequestMethods("GET")
@@ -97,7 +112,7 @@ def quiz(request):
            status.qtime = datetime.now()
            status.start_time = datetime.now()
            status.save()
-           print(history.use_time)
+           #print(history.use_time)
            mins = int(history.use_time/60000)
            secs = float(history.use_time%60000/1000.0)
            return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs})
@@ -145,6 +160,11 @@ def submit(request):
                 question.total += 1
                 question.save()
                 return JsonResponse(False,"回答错误！")
+
+#@LoginRequired
+@RequestMethods("GET")
+def rankings(request):
+    return render(request, 'finished.html', {'result':history})
 
 #@LoginRequired
 @RequestMethods("GET")
