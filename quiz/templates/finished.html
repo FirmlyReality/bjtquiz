@@ -12,11 +12,16 @@
     <p>答题数：{{ result.qnum }}</p>
     <p>答对数：{{ result.rightnum }}</p>
     <p>耗时：{{ mins }}分{{ secs }}秒</p>
+    <p>个人目前最好成绩，排行榜更新！</p>
+    <p>排名：{{ rank }}</p>
   </div>
+</div>
+<div id='sharebtbox'>
+  <wb:share-button type="button" count='n' size="big" appkey="2411916390" url='http://120.25.241.20/' title='我答对了{{ result.qnum }}道题，仅耗时{{ min }}分{{ secs }}秒，你也来试试吧！' ></wb:share-button>
 </div>
 <div id='buttonbox'>
   <a class='mybt3' href='/main/'>返回主界面</a>
-  <wb:share-button button_text="分享结果到微博" size="big" appkey="2411916390" url='http://120.25.241.20/' title='我答对了{{ result.qnum }}道题，仅耗时{{ min }}分{{ secs }}秒，你也来试试吧！' type="button"></wb:share-button>
+  <a class='mybt2' href='/rankings/'>查看完整排行榜</a>
 </div>
 {% endblock %}
 
