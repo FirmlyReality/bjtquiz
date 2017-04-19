@@ -19,7 +19,6 @@
                         <th>答题数</th>
                         <th>答对数</th>
                         <th>耗时</th>
-                        <th>完成时间</th>
                     	</tr>
                     	</thead>
                     <tbody>
@@ -30,7 +29,6 @@
                       <td>{{ history.qnum }}</td>
                       <td>{{ history.rightnum }}</td>
                       <td>{% widthratio history.use_time 1000 1%}秒</td>
-                      <td>{{ history.end_time }}</td>
                       </tr>
                       {% endfor %}
                     </tbody>
