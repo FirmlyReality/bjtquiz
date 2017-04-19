@@ -55,6 +55,14 @@
   text-align: center;
   float: left;
 }
+#rankingsbtbox
+{
+  width: 90%;
+  height: 50px;
+  text-align: center;
+  float: left;
+  margin-top: 20px;
+}
 .myButton1
 {
 	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;

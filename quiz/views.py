@@ -62,7 +62,7 @@ def update_best(user, history):
     is_update = False
     if hasattr(user, 'besthistory'):
         besthistory = user.besthistory
-        if besthistory.history.rightnum < history.rightnum or (besthistory.history.rightnum == history.rightnum and besthistory.history.use_time > history.use_time):
+        if besthistory.rightnum < history.rightnum or (besthistory.rightnum == history.rightnum and besthistory.use_time > history.use_time):
             besthistory.qnum = history.qnum
             besthistory.rightnum = history.rightnum
             besthistory.use_time = history.use_time

@@ -14,10 +14,14 @@
         <p>来测测看看你对小白了解多少吧。</p>
         <h5>注意事项：</h5>
         <p>每次测试共三十个单选题，每个问题限10秒内回答出来，超时算回答错误，点击选项会自动判断答案并跳转到下一题。</p>
+        <p>注意题目旁的计时仅起提示作用，刷新并不会重置计时。</p>
         <p>准备好了就开始吧!</p>
     </div>
     <div id='startbtbox'>
       <a class='mybt1' href='/quiz/'>开始答题</a>
+    </div>
+    <div id='rankingsbtbox'>
+      <a class='mybt1' href='/rankings/'>查看排行榜</a>
     </div>
     {% if user.is_admin == True %}
     <div id='adminbtbox'>
