@@ -63,15 +63,27 @@ def update_best(user, history):
     if hasattr(user, 'besthistory'):
         besthistory = user.besthistory
         if besthistory.history.rightnum < history.rightnum or (besthistory.history.rightnum == history.rightnum and besthistory.history.use_time > history.use_time):
-            besthistory.history = history
+            besthistory.qnum = history.qnum
+            besthistory.rightnum = history.rightnum
+            besthistory.use_time = history.use_time
+            besthistory.end_time = history.end_time
             besthistory.save()
             is_update = True
     else:
-        best = BestHistory(user=user, history=history)
+        best = BestHistory(user=user)
+        best.qnum = history.qnum
+        best.rightnum = history.rightnum
+        best.use_time = history.use_time
+        best.end_time = history.end_time
         best.save()
         is_update = True
-    BestHistory.objects.values('history').order_by()
-
+    bests = BestHistory.objects.order_by('-rightnum','use_time')
+    rank = 1
+    for best in bests:
+        if best.user == user:
+            break
+        rank += 1
+    return [is_update, rank]
 
 @LoginRequired
 @RequestMethods("GET")
@@ -115,7 +127,8 @@ def quiz(request):
            #print(history.use_time)
            mins = int(history.use_time/60000)
            secs = float(history.use_time%60000/1000.0)
-           return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs})
+           [is_update, rank] = update_best(request.user, history)
+           return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs, 'is_update':is_update, 'rank':rank})
 
    else:
        now_question = quizstatus.questions.all()[quizstatus.now_qi]
@@ -161,12 +174,14 @@ def submit(request):
                 question.save()
                 return JsonResponse(False,"回答错误！")
 
-#@LoginRequired
+@LoginRequired
 @RequestMethods("GET")
 def rankings(request):
-    return render(request, 'finished.html', {'result':history})
+    bests = BestHistory.objects.order_by('-rightnum','use_time')
+    return render(request, 'rankings.html', {'user':request.user, 'histories':bests})
 
-#@LoginRequired
+@LoginRequired
+@AdminRequired
 @RequestMethods("GET")
 def readquestions(request):
     infile = open("questions.txt")

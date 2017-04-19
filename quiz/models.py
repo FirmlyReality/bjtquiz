@@ -35,4 +35,7 @@ class QuizHistory(models.Model):
 
 class BestHistory(models.Model):
     user = models.OneToOneField('users.MyUser', on_delete=models.CASCADE, related_name='besthistory')
-    history = models.OneToOneField('quiz.QuizHistory', on_delete=models.CASCADE, related_name='besthistory')
+    qnum = models.IntegerField()
+    rightnum = models.IntegerField()
+    use_time = models.IntegerField(default=0)
+    end_time = models.DateTimeField()

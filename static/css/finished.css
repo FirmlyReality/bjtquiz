@@ -2,16 +2,22 @@
 {
   float:left;
   width: 100%;
-  height: 60%;
   text-align: center;
 
 }
 #result
 {
-  padding-top: 50px;
+  padding-top: 20px;
+  padding-bottom: 0px;
   margin: 0 auto;
-  font-size: 23px;
+  font-size: 22px;
   font-weight: bold;
+}
+#sharebtbox
+{
+  float:left;
+  width:100%;
+  text-align: center;
 }
 #buttonbox
 {
@@ -20,7 +26,7 @@
 }
 .mybt3
 {
-  margin-left:300px;
+  margin-left:330px;
   height:30px;
   cursor:pointer;
   padding:5px 10px;
