@@ -138,6 +138,30 @@ def quiz(request):
    return render(request, 'quiz.html', {'user':request.user, 'question':now_question.question, 'options':options, 'now_qnum':quizstatus.now_qnum, 'total':total, 'qtime':timestamp})
 
 @LoginRequired
+@RequestMethods("GET")
+def endquiz(request):
+   global q1_num, q2_num, q3_num
+   total = q1_num + q2_num + q3_num
+   quizstatus = request.user.quizstatus
+   if quizstatus.now_qnum == 0:
+       return redirect("/main/")
+   else:
+       history = QuizHistory(user=request.user, qnum=quizstatus.now_qnum, rightnum=quizstatus.now_rightnum)
+       history.use_time = quizstatus.use_time
+       history.save()
+       quizstatus.now_qnum = 0
+       quizstatus.delete()
+       status = QuizStatus(user=request.user, now_qnum=0, now_rightnum=0, is_finished=True)
+       status.qtime = datetime.now()
+       status.start_time = datetime.now()
+       status.save()
+       #print(history.use_time)
+       mins = int(history.use_time/60000)
+       secs = float(history.use_time%60000/1000.0)
+       [is_update, rank] = update_best(request.user, history)
+       return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs, 'is_update':is_update, 'rank':rank})
+
+@LoginRequired
 @RequestMethods("POST")
 def submit(request):
     option = request.POST.get('option',None)

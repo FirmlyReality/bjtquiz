@@ -88,3 +88,10 @@ ul.answers li
   font-size: 23px;
   font-weight: bold;
 }
+#endbtbox
+{
+  float:left;
+  width:100%;
+  text-align:center;
+  margin-top:20px;
+}
