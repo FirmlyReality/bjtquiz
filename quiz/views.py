@@ -87,58 +87,6 @@ def update_best(user, history):
 
 @LoginRequired
 @RequestMethods("GET")
-def quiz(request):
-   global q1_num, q2_num, q3_num
-   total = q1_num + q2_num + q3_num
-   quizstatus = request.user.quizstatus
-   if quizstatus.now_qnum == 0:
-       addquestions(quizstatus, 1, q1_num)
-       addquestions(quizstatus, 2, q2_num)
-       addquestions(quizstatus, 3, q3_num)
-       quizstatus.start_time = datetime.now()
-       quizstatus.save()
-   if quizstatus.is_finished == True:
-       if quizstatus.now_qnum < total:
-           quizstatus.now_qi = random.randint(0,29-quizstatus.now_qnum)
-           quizquestions = quizstatus.questions.all()
-           if len(quizquestions) < 30-quizstatus.now_qnum:
-               diffnum = 30-quizstatus.now_qnum - len(quizquestions)
-               questions = Question.objects.all()
-               random.seed(time.time())
-               indexes = random.sample(range(len(questions)), diffnum)
-               for i in indexes:
-                   quizstatus.questions.add(questions[i])
-           now_question = quizstatus.questions.all()[quizstatus.now_qi]
-           quizstatus.now_qnum += 1
-           quizstatus.qtime = datetime.now()
-           quizstatus.is_finished = False
-           quizstatus.save()
-           options = getoptions(now_question, quizstatus)
-       else:
-           history = QuizHistory(user=request.user, qnum=total, rightnum=quizstatus.now_rightnum)
-           history.use_time = quizstatus.use_time
-           history.save()
-           quizstatus.now_qnum = 0
-           quizstatus.delete()
-           status = QuizStatus(user=request.user, now_qnum=0, now_rightnum=0, is_finished=True)
-           status.qtime = datetime.now()
-           status.start_time = datetime.now()
-           status.save()
-           #print(history.use_time)
-           mins = int(history.use_time/60000)
-           secs = float(history.use_time%60000/1000.0)
-           [is_update, rank] = update_best(request.user, history)
-           return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs, 'is_update':is_update, 'rank':rank})
-
-   else:
-       now_question = quizstatus.questions.all()[quizstatus.now_qi]
-       options = getoptions(now_question, quizstatus)
-   t = quizstatus.qtime.timetuple()
-   timestamp = int(time.mktime(t))*1000
-   return render(request, 'quiz.html', {'user':request.user, 'question':now_question.question, 'options':options, 'now_qnum':quizstatus.now_qnum, 'total':total, 'qtime':timestamp})
-
-@LoginRequired
-@RequestMethods("GET")
 def endquiz(request):
    global q1_num, q2_num, q3_num
    total = q1_num + q2_num + q3_num
@@ -162,6 +110,45 @@ def endquiz(request):
        return render(request, 'finished.html', {'result':history, 'mins':mins, 'secs':secs, 'is_update':is_update, 'rank':rank})
 
 @LoginRequired
+@RequestMethods("GET")
+def quiz(request):
+   global q1_num, q2_num, q3_num
+   total = q1_num + q2_num + q3_num
+   quizstatus = request.user.quizstatus
+   if quizstatus.now_qnum == 0:
+       addquestions(quizstatus, 1, q1_num)
+       addquestions(quizstatus, 2, q2_num)
+       addquestions(quizstatus, 3, q3_num)
+       quizstatus.save()
+   if (not quizstatus.now_qnum == 0) and (datetime.now() - quizstatus.qtime).total_seconds() > 60:
+       return redirect("/endquiz/")
+   if quizstatus.is_finished == True:
+       if quizstatus.now_qnum < total:
+           quizstatus.now_qi = random.randint(0,29-quizstatus.now_qnum)
+           quizquestions = quizstatus.questions.all()
+           if len(quizquestions) < 30-quizstatus.now_qnum:
+               diffnum = 30-quizstatus.now_qnum - len(quizquestions)
+               questions = Question.objects.all()
+               random.seed(time.time())
+               indexes = random.sample(range(len(questions)), diffnum)
+               for i in indexes:
+                   quizstatus.questions.add(questions[i])
+           now_question = quizstatus.questions.all()[quizstatus.now_qi]
+           quizstatus.now_qnum += 1
+           quizstatus.qtime = datetime.now()
+           quizstatus.is_finished = False
+           quizstatus.save()
+           options = getoptions(now_question, quizstatus)
+       else:
+           return redirect("/endquiz/")
+   else:
+       now_question = quizstatus.questions.all()[quizstatus.now_qi]
+       options = getoptions(now_question, quizstatus)
+   t = quizstatus.qtime.timetuple()
+   timestamp = int(time.mktime(t))*1000
+   return render(request, 'quiz.html', {'user':request.user, 'question':now_question.question, 'options':options, 'now_qnum':quizstatus.now_qnum, 'total':total, 'qtime':timestamp})
+
+@LoginRequired
 @RequestMethods("POST")
 def submit(request):
     option = request.POST.get('option',None)
@@ -176,10 +163,10 @@ def submit(request):
         question = quizstatus.questions.all()[quizstatus.now_qi]
         quizstatus.questions.remove(question)
         delta = datetime.now() - quizstatus.qtime
-        dseconds = delta.seconds
-        if delta.seconds >= limit_time:
+        dseconds = delta.total_seconds()
+        if dseconds >= float(limit_time):
             dseconds = limit_time
-        quizstatus.use_time += int(dseconds*1000 + int(delta.microseconds/1000))
+        quizstatus.use_time += int(dseconds*1000)
         quizstatus.save()
         if delta.seconds >= limit_time:
             return JsonResponse(False, "回答超时，请回答下一题！")
