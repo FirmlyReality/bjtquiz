@@ -3,11 +3,12 @@ from django.shortcuts import render,redirect
 from weibo import APIClient
 from users.LoginRequired import *
 from users.models import *
+from django.http import HttpResponse
 from Http.RequestMethods import *
 from Http.JsonResponse import *
 from quiz.models import *
 import random,time
-from datetime import datetime
+from datetime import datetime,timedelta
 
 # Create your views here.
 @RequestMethods("GET")
@@ -29,6 +30,7 @@ q1_num = 15
 q2_num = 5
 q3_num = 10
 limit_time = 10
+quiz_again_days = 1
 
 def addquestions(status, level, num):
     questions = Question.objects.filter(level=level).all()
@@ -101,7 +103,6 @@ def endquiz(request):
        quizstatus.delete()
        status = QuizStatus(user=request.user, now_qnum=0, now_rightnum=0, is_finished=True)
        status.qtime = datetime.now()
-       status.start_time = datetime.now()
        status.save()
        #print(history.use_time)
        mins = int(history.use_time/60000)
@@ -115,13 +116,17 @@ def quiz(request):
    global q1_num, q2_num, q3_num
    total = q1_num + q2_num + q3_num
    quizstatus = request.user.quizstatus
+   if (not quizstatus.now_qnum == 0) and (datetime.now() - quizstatus.qtime).total_seconds() > 60:
+       return redirect("/endquiz/")
+   if quizstatus.now_qnum == 0 and (datetime.now() - quizstatus.qtime).days < quiz_again_days:
+       next_time = quizstatus.qtime+timedelta(days=quiz_again_days)
+       time_str = next_time.strftime('%Y年%m月%d日%H时%M分')
+       return HttpResponse("<script languagae='javascript'>alert('你已在%d天内参加过测试，请在%s以后再尝试答题');window.history.back(-1);</script>"%(quiz_again_days,time_str))
    if quizstatus.now_qnum == 0:
        addquestions(quizstatus, 1, q1_num)
        addquestions(quizstatus, 2, q2_num)
        addquestions(quizstatus, 3, q3_num)
        quizstatus.save()
-   if (not quizstatus.now_qnum == 0) and (datetime.now() - quizstatus.qtime).total_seconds() > 60:
-       return redirect("/endquiz/")
    if quizstatus.is_finished == True:
        if quizstatus.now_qnum < total:
            quizstatus.now_qi = random.randint(0,29-quizstatus.now_qnum)

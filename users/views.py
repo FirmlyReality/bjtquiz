@@ -6,7 +6,7 @@ from quiz.models import *
 from django.contrib.auth import *
 from users.LoginRequired import *
 from Http.RequestMethods import *
-from datetime import datetime
+from datetime import datetime,timedelta
 
 APP_KEY = '2411916390' # app key
 CALLBACK_URL = 'http://120.25.241.20/loginback/' # callback url
@@ -40,8 +40,7 @@ def webloginback(request):
     if user is None:
         user = MyUser.objects.create_user(uid," ",res.name, res.avatar_hd , access_token, expires_in)
         status = QuizStatus(user=user, now_qnum=0, now_rightnum=0, is_finished=True)
-        status.qtime = datetime.now()
-        status.start_time = datetime.now()
+        status.qtime = datetime.now() - timedelta(days=1000)
         status.save()
     else:
         user.avatar_hd = res.avatar_hd

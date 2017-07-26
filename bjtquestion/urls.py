@@ -37,5 +37,5 @@ urlpatterns = [
     #url(r'^finished/$', finished),
     url(r'^rankings/$', rankings),
     url(r'^endquiz/$', endquiz),
-    #url(r'^readquestions/$', readquestions),
+    url(r'^readquestions/$', readquestions),
 ]
