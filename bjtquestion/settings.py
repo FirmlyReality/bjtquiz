@@ -26,7 +26,7 @@ SECRET_KEY = 'wvlkhm^e=lgm^6*d^t^bc20!3ps741ncztd+0d15k=-%+@@f#^'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'120.25.241.20',
+	'47.92.121.131',
 ]
 
 
@@ -123,7 +123,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/bjtquiz/static'
+STATIC_ROOT = '/root/bjtquiz/static'
 
 CUSTOM_USER_MODEL = 'users.MyUser'
 AUTH_USER_MODEL = 'users.MyUser'

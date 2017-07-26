@@ -1,3 +1,4 @@
 *.pyc
-settings.py
 secret.txt
+settings.py
+db.sqlite3
