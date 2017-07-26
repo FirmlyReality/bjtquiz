@@ -173,7 +173,7 @@ def submit(request):
             dseconds = limit_time
         quizstatus.use_time += int(dseconds*1000)
         quizstatus.save()
-        if delta.seconds >= limit_time:
+        if delta.seconds >= limit_time or option == 'E':
             return JsonResponse(False, "回答超时，请回答下一题！")
         else:
             print(option)
