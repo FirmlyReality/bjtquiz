@@ -9,7 +9,7 @@ from Http.RequestMethods import *
 from datetime import datetime,timedelta
 
 APP_KEY = '2411916390' # app key
-CALLBACK_URL = 'http://120.25.241.20/loginback/' # callback url
+CALLBACK_URL = 'http://47.92.121.131/loginback/' # callback url
 
 secret_file = open("secret.txt")
 APP_SECRET = secret_file.read().strip()
