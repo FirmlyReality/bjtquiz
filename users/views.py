@@ -8,8 +8,8 @@ from users.LoginRequired import *
 from Http.RequestMethods import *
 from datetime import datetime,timedelta
 
-APP_KEY = '2411916390' # app key
-CALLBACK_URL = 'http://47.92.121.131/loginback/' # callback url
+APP_KEY = '1691953188' # app key
+CALLBACK_URL = 'http://www.bjtquiz.cn/loginback/' # callback url
 
 secret_file = open("secret.txt")
 APP_SECRET = secret_file.read().strip()
